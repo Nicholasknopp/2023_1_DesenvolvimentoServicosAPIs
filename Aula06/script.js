@@ -36,7 +36,8 @@ function adicionar(){
 
         }
     };
-    url = "servidor.php?cadastrar&nome=" + $("#txtNome").val() + "&preco=" + $("#txtPreco").val()        
+    url = "servidor.php?cadastrar&nome=" + $("#txtNome").val() + "&preco=" + $("#txtPreco").val();        
     xhttp.open("GET", url, true);
-    xhttp.send()
+    xhttp.send();
+
 }
