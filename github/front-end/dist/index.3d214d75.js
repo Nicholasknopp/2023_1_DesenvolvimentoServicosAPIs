@@ -580,7 +580,6 @@ var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _queryString = require("query-string");
 var _queryStringDefault = parcelHelpers.interopDefault(_queryString);
 function redirectToGitHub() {
-    console.log("oi");
     const GITHUB_URL = "https://github.com/login/oauth/authorize";
     const params = {
         response_type: "code",
@@ -593,24 +592,17 @@ function redirectToGitHub() {
     const authURL = `${GITHUB_URL}?${queryStrings}`;
     window.location.href = authURL;
 }
-function sleep(miliseconds) {
-    var currentTime = new Date().getTime();
-    while(currentTime + miliseconds >= new Date().getTime());
-}
 window.onload = async ()=>{
     document.querySelector(".login").addEventListener("click", redirectToGitHub);
     const { code  } = (0, _queryStringDefault.default).parseUrl(window.location.href).query;
     if (code) try {
-        console.log("1");
-        sleep(2000);
         const response = await (0, _axiosDefault.default).post(`${"http://localhost:5000"}/login`, {
             code
         });
-    //const user = response.data;
-    //console.log(user);
+        const user = response.data;
     } catch (error) {
-        alert("Deu erro _");
-        console.log("error", error);
+        alert("Deu erro");
+        console.log("erro", erro);
     }
 };
 

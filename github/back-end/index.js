@@ -31,14 +31,14 @@ async function exchangeCodeForAcessToken(code) {
     client_id: CLIENT_ID,
     client_secret: CLIENT_SECRET
   };
-
+  
   const {data}  = await axios.post(GITHUB_ACESS_TOKEN_URL, body, {
     headers: {
       'Content-Type': 'application/json'
     }
-});
-const parsedData = qs.parse(data);
-return parsedData.acess_token;
+  });
+  const parsedData = qs.parse(data);
+  return parsedData.acess_token;
 }
 
 async function fetchUser(token) {
@@ -46,9 +46,9 @@ async function fetchUser(token) {
     headers: {
       Authorization: `Bearer ${token}`
     }
-   });
-   
-   return response.data
+  });
+  
+  return response.data
 }
 
 app.listen(5000, () => {
