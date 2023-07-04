@@ -1,0 +1,27 @@
+{
+  "name": "lista_chamada",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "knex": "^2.4.2",
+    "mysql": "^2.18.1",
+    "query-string": "^8.1.0",
+    "restify": "^11.1.0",
+    "restify-cors-middleware2": "^2.2.1",
+    "restify-errors": "^8.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
