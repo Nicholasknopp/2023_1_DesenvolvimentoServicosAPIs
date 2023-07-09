@@ -2,28 +2,28 @@ function ler(){
     console.log("oi");
     divStatus = document.getElementById("status");
     divStatus.innerHTML = "carregando...";
-    tabela = document.getElementById("tblChamada");
+    tabela = document.getElementById("tblPessoa");
 
     xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
         if( this.readyState == 4 && this.status == 200){
             obj = JSON.parse( this.responseText );
-            obj.forEach( cham => {
-                if( document.getElementById("c" + cham.id ) == null ){
+            obj.forEach( pess => {
+                if( document.getElementById("p" + pess.id ) == null ){
                     index = tabela.rows.length;
                     row = tabela.insertRow(-1);
-                    row.id = "p" + cham.id;
+                    row.id = "p" + pess.id;
                     cellID = row.insertCell(0);
                     cellNOME = row.insertCell(1);
-                    cellPresente = row.insertCell(2);
-                    cellFalta = row.insertCell(2);
-                    cellEXCLUIR = row.insertCell(3);
-                    cellID.innerHTML = cham.id;
-                    cellNOME.innerHTML = cham.nome;
-                    cellPRESENTE.innerHTML = cham.presente;
-                    cellFALTA.innerHTML = cham.Falta;
-                    cellEXCLUIR.innerHTML = "<button onclick='excluir(" + cham.id +")' >EXCLUIR</button>";
+                    cellPRESENCA = row.insertCell(2);
+                    cellFALTA = row.insertCell(3);
+                    cellEXCLUIR = row.insertCell(4);
+                    cellID.innerHTML = pess.id;
+                    cellNOME.innerHTML = pess.nome;
+                    cellPRESENCA.innerHTML = pess.presenca;
+                    cellFALTA.innerHTML = pess.falta;
+                    cellEXCLUIR.innerHTML = "<button onclick='excluir(" + pess.id +")' >EXCLUIR</button>";
 
                 }
             });
@@ -37,7 +37,7 @@ function ler(){
 
     };
 
-    xhttp.open("GET", "http://localhost:8001/chamada", true);
+    xhttp.open("GET", "http://localhost:8001/pessoa", true);
     xhttp.send();
 }
 
@@ -45,27 +45,27 @@ function ler(){
 function add(){
     xhttp = new XMLHttpRequest();
     var txtNome = document.getElementById("txtNome");
-    var txtPresente = document.getElementById("txtPresente");
+    var txtPresenca = document.getElementById("txtPresenca");
     var txtFalta = document.getElementById("txtFalta");
 
     xhttp.onreadystatechange = function(){
         if( this.readyState == 4 && this.status == 200){
             ler();
             txtNome.value = "";
-            txtPresente.value = "";
+            txtPresenca.value = "";
             txtFalta.value = "";
         }
     };
 
-    xhttp.open("POST", "http://localhost:8001/chamada", true);
+    xhttp.open("POST", "http://localhost:8001/pessoa", true);
     xhttp.setRequestHeader( "Content-type" , "application/x-www-form-urlencoded" );
     var nome = txtNome.value;
-    var presente =  txtPresente.value
+    var presenca =  txtPresenca.value
     var falta = txtFalta.value 
-    xhttp.send( "nome=" + nome + "&presenca=" + presente + "&falta=" + falta );
+    xhttp.send( "nome=" + nome + "&presenca=" + presenca + "&falta=" + falta );
 }
 
-function excluir(idcham){
+function excluir(idPess){
     xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
@@ -74,7 +74,7 @@ function excluir(idcham){
         }
     };
 
-    xhttp.open("DELETE", "http://localhost:8001/chamada/" + idcham, true);
+    xhttp.open("DELETE", "http://localhost:8001/pessoa/" + idPess, true);
   
     xhttp.send( );
 }
