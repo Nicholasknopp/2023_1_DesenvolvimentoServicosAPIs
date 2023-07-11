@@ -22,7 +22,7 @@ window.onload = async () => {
   const { code } = qs.parseUrl(window.location.href).query;
   if(code) {
     try{
-      const response = await axios.post(`${process.env.BACKEND_URL}/login`, { code });
+      const response = await axios.post(`${process.env.REDIRECT_URL}`, { code });
       const user = response.data;
       alert("Você está logado!");
       console.log(user);      

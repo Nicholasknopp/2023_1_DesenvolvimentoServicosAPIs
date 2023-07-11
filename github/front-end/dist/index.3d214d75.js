@@ -584,8 +584,8 @@ function redirectToGitHub() {
     const params = {
         response_type: "code",
         scope: "user",
-        client_id: "4953b039b2a03bc795cb",
-        redirect_uri: "http://localhost:1234/",
+        client_id: "527ca35b183a749f90c1",
+        redirect_uri: "http://localhost:8001/",
         state: "test-t5"
     };
     const queryStrings = (0, _queryStringDefault.default).stringify(params);
@@ -596,7 +596,7 @@ window.onload = async ()=>{
     document.querySelector(".login").addEventListener("click", redirectToGitHub);
     const { code } = (0, _queryStringDefault.default).parseUrl(window.location.href).query;
     if (code) try {
-        const response = await (0, _axiosDefault.default).post(`${undefined}/login`, {
+        const response = await (0, _axiosDefault.default).post(`${"http://localhost:8001/"}`, {
             code
         });
         const user = response.data;
