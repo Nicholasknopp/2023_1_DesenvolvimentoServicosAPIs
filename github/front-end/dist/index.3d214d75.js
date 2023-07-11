@@ -584,25 +584,27 @@ function redirectToGitHub() {
     const params = {
         response_type: "code",
         scope: "user",
-        client_id: "1d30f2a93f20e9853095",
-        redirect_uri: "http://localhost:1234/"
+        client_id: "4953b039b2a03bc795cb",
+        redirect_uri: "http://localhost:1234/",
+        state: "test-t5"
     };
-    console.log("ola");
     const queryStrings = (0, _queryStringDefault.default).stringify(params);
-    const authURL = `${GITHUB_URL}?${queryStrings}`;
-    window.location.href = authURL;
+    const authorizationUrl = `${GITHUB_URL}?${queryStrings}`;
+    window.location.href = authorizationUrl;
 }
 window.onload = async ()=>{
     document.querySelector(".login").addEventListener("click", redirectToGitHub);
-    const { code  } = (0, _queryStringDefault.default).parseUrl(window.location.href).query;
+    const { code } = (0, _queryStringDefault.default).parseUrl(window.location.href).query;
     if (code) try {
-        const response = await (0, _axiosDefault.default).post(`${"http://localhost:5000"}/login`, {
+        const response = await (0, _axiosDefault.default).post(`${undefined}/login`, {
             code
         });
         const user = response.data;
-    } catch (error) {
-        alert("Deu erro");
-        console.log("erro", erro);
+        alert("Voc\xea est\xe1 logado!");
+        console.log(user);
+    } catch (err) {
+        alert("ops, deu errado!");
+        console.log("err", err);
     }
 };
 
@@ -630,7 +632,7 @@ var _axiosJsDefault = parcelHelpers.interopDefault(_axiosJs);
 // This module is intended to unwrap Axios default export as named.
 // Keep top-level export same with static properties
 // so that it can keep same with es module or cjs
-const { Axios , AxiosError , CanceledError , isCancel , CancelToken , VERSION , all , Cancel , isAxiosError , spread , toFormData , AxiosHeaders , HttpStatusCode , formToJSON , mergeConfig  } = (0, _axiosJsDefault.default);
+const { Axios, AxiosError, CanceledError, isCancel, CancelToken, VERSION, all, Cancel, isAxiosError, spread, toFormData, AxiosHeaders, HttpStatusCode, formToJSON, mergeConfig } = (0, _axiosJsDefault.default);
 
 },{"./lib/axios.js":"63MyY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"63MyY":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -728,8 +730,8 @@ var _bindJsDefault = parcelHelpers.interopDefault(_bindJs);
 var global = arguments[3];
 "use strict";
 // utils is a library of generic helper functions non-specific to axios
-const { toString  } = Object.prototype;
-const { getPrototypeOf  } = Object;
+const { toString } = Object.prototype;
+const { getPrototypeOf } = Object;
 const kindOf = ((cache)=>(thing)=>{
         const str = toString.call(thing);
         return cache[str] || (cache[str] = str.slice(8, -1).toLowerCase());
@@ -745,7 +747,7 @@ const typeOfTest = (type)=>(thing)=>typeof thing === type;
  * @param {Object} val The value to test
  *
  * @returns {boolean} True if value is an Array, otherwise false
- */ const { isArray  } = Array;
+ */ const { isArray } = Array;
 /**
  * Determine if a value is undefined
  *
@@ -899,7 +901,7 @@ const typeOfTest = (type)=>(thing)=>typeof thing === type;
  *
  * @param {Boolean} [allOwnKeys = false]
  * @returns {any}
- */ function forEach(obj, fn, { allOwnKeys =false  } = {}) {
+ */ function forEach(obj, fn, { allOwnKeys = false } = {}) {
     // Don't bother if no value provided
     if (obj === null || typeof obj === "undefined") return;
     let i;
@@ -955,7 +957,7 @@ const isContextDefined = (context)=>!isUndefined(context) && context !== _global
  *
  * @returns {Object} Result of all merge properties
  */ function merge() {
-    const { caseless  } = isContextDefined(this) && this || {};
+    const { caseless } = isContextDefined(this) && this || {};
     const result = {};
     const assignValue = (val, key)=>{
         const targetKey = caseless && findKey(result, key) || key;
@@ -976,7 +978,7 @@ const isContextDefined = (context)=>!isUndefined(context) && context !== _global
  *
  * @param {Boolean} [allOwnKeys]
  * @returns {Object} The resulting value of object a
- */ const extend = (a, b, thisArg, { allOwnKeys  } = {})=>{
+ */ const extend = (a, b, thisArg, { allOwnKeys } = {})=>{
     forEach(b, (val, key)=>{
         if (thisArg && isFunction(val)) a[key] = (0, _bindJsDefault.default)(val, thisArg);
         else a[key] = val;
@@ -1120,7 +1122,7 @@ const toCamelCase = (str)=>{
         return p1.toUpperCase() + p2;
     });
 };
-/* Creating a function that will check if an object has a property. */ const hasOwnProperty = (({ hasOwnProperty  })=>(obj, prop)=>hasOwnProperty.call(obj, prop))(Object.prototype);
+/* Creating a function that will check if an object has a property. */ const hasOwnProperty = (({ hasOwnProperty })=>(obj, prop)=>hasOwnProperty.call(obj, prop))(Object.prototype);
 /**
  * Determine if a value is a RegExp object
  *
@@ -1183,7 +1185,7 @@ const ALPHABET = {
 };
 const generateString = (size = 16, alphabet = ALPHABET.ALPHA_DIGIT)=>{
     let str = "";
-    const { length  } = alphabet;
+    const { length } = alphabet;
     while(size--)str += alphabet[Math.random() * length | 0];
     return str;
 };
@@ -1362,7 +1364,7 @@ const validators = (0, _validatorJsDefault.default).validators;
             config.url = configOrUrl;
         } else config = configOrUrl || {};
         config = (0, _mergeConfigJsDefault.default)(this.defaults, config);
-        const { transitional , paramsSerializer , headers  } = config;
+        const { transitional, paramsSerializer, headers } = config;
         if (transitional !== undefined) (0, _validatorJsDefault.default).assertOptions(transitional, {
             silentJSONParsing: validators.transitional(validators.boolean),
             forcedJSONParsing: validators.transitional(validators.boolean),
@@ -4225,7 +4227,7 @@ exports.default = {
         adapters = (0, _utilsJsDefault.default).isArray(adapters) ? adapters : [
             adapters
         ];
-        const { length  } = adapters;
+        const { length } = adapters;
         let nameOrAdapter;
         let adapter;
         for(let i = 0; i < length; i++){
@@ -5343,7 +5345,7 @@ function pick(input, filter, options) {
         [encodeFragmentIdentifier]: false,
         ...options
     };
-    const { url , query , fragmentIdentifier  } = parseUrl(input, options);
+    const { url, query, fragmentIdentifier } = parseUrl(input, options);
     return stringifyUrl({
         url,
         query: (0, _filterObj.includeKeys)(query, filter),

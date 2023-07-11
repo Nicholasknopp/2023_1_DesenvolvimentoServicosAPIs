@@ -12,11 +12,10 @@ app.use(json());
 app.post("/login", async (req, res) => {
   try {
     const token = await exchangeCodeForAcessToken(req.body.code);
-    console.log(token);
-    const user = await fetchUser(token);
-    res.send(user);
-  } catch (error) {
-    console.log("error", error.response.data);
+    console.log("token", token);
+    const user = await fetchUser(token);    
+  } catch (err) {
+    console.log("err", err.response.data);
     res.sendStatus(500);
   }
 });
@@ -24,7 +23,7 @@ app.post("/login", async (req, res) => {
 async function exchangeCodeForAcessToken(code) {
   const GITHUB_ACESS_TOKEN_URL = 'https://github.com/login/oauth/acess_token';
   const {REDIRECT_URL, CLIENT_ID, CLIENT_SECRET} = process.env;
-  const body = {
+  const params = {
     code,
     grant_type: 'authorization_code',
     redirect_uri: REDIRECT_URL,
@@ -32,17 +31,19 @@ async function exchangeCodeForAcessToken(code) {
     client_secret: CLIENT_SECRET
   };
   
-  const {data}  = await axios.post(GITHUB_ACESS_TOKEN_URL, body, {
+  const {data}  = await axios.post(GITHUB_ACESS_TOKEN_URL, params, {
     headers: {
       'Content-Type': 'application/json'
     }
   });
+  
   const parsedData = qs.parse(data);
   return parsedData.acess_token;
 }
 
 async function fetchUser(token) {
-  const response = await axios.get("https://api.github.com/user", {
+  const GITHUB_ENDPOINT = "https://api.github.com/user";
+  const response = await axios.get(GITHUB_ENDPOINT, {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -52,5 +53,5 @@ async function fetchUser(token) {
 }
 
 app.listen(5000, () => {
-  console.log("Server is up and running.")
+  console.log("Server is up and running on port 5000")
 })

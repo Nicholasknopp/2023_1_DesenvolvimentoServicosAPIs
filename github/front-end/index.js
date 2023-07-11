@@ -7,25 +7,28 @@ function redirectToGitHub() {
     response_type: 'code',
     scope: 'user',
     client_id: process.env.CLIENT_ID,
-    redirect_uri: process.env.REDIRECT_URL
+    redirect_uri: process.env.REDIRECT_URL,
+    state: 'test-t5'
   }
-  console.log("ola");
+  
   const queryStrings = qs.stringify(params);
-  const authURL = `${GITHUB_URL}?${queryStrings}`;
-  window.location.href = authURL;
+  const authorizationUrl = `${GITHUB_URL}?${queryStrings}`;
+  window.location.href = authorizationUrl;
 }
 
 window.onload = async () => {
-  document.querySelector(".login").addEventListener("click", redirectToGitHub);
+  document.querySelector(".login").addEventListener("click", redirectToGitHub)
 
   const { code } = qs.parseUrl(window.location.href).query;
   if(code) {
-    try {
-      const response = await axios.post(`${process.env.BACK_END_URL}/login`, { code });
+    try{
+      const response = await axios.post(`${process.env.BACKEND_URL}/login`, { code });
       const user = response.data;
-    } catch (error) {
-      alert("Deu erro");
-      console.log("erro", erro);
-    }   
+      alert("Você está logado!");
+      console.log(user);      
+    } catch (err) {
+      alert("ops, deu errado!");
+      console.log("err", err);
+    }
   }
 }
